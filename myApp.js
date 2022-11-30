@@ -1,9 +1,17 @@
+require("dotenv").config();
+var bodyParser = require("body-parser");
+
 let express = require("express");
 let app = express();
 console.log("Hello World");
 
+app.use(function middleware(req, res, next) {
+  console.log(`${req.method} ${req.path} - ${req.ip}`);
+  next();
+});
+
 app.get("/", function (req, res) {
-  // res.send("Hello Express");
+  //res.send('Hello Express');
   res.sendFile((absolutePath = __dirname + "/views/index.html"));
 });
 
@@ -47,3 +55,8 @@ app.get("/name", function (req, res) {
     name: `${firstName} ${lastName}`,
   });
 });
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+module.exports = app;
