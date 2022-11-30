@@ -58,5 +58,9 @@ app.get("/name", function (req, res) {
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.post("/name", function (req, res) {
+  var string = req.body.first + " " + req.body.last;
+  res.json({ name: string });
+});
 
 module.exports = app;
